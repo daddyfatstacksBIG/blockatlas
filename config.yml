@@ -32,8 +32,8 @@ tezos:
   api: https://api1.tzscan.io/v3
 
 # [ETH] Ethereum: https://ethereum.org (Trust-Ray API)
-#ethereum:
-#  api: https://localhost:4567
+ethereum:
+ api: https://blockscout.com/eth/mainnet
 
 # [AION] Aion: https://aion.network
 aion:

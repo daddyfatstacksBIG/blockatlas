@@ -3,10 +3,11 @@ package ethereum
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sirupsen/logrus"
-	"github.com/trustwallet/blockatlas/models"
 	"net/http"
 	"net/url"
+
+	"github.com/sirupsen/logrus"
+	"github.com/trustwallet/blockatlas/models"
 )
 
 type Client struct {
@@ -18,7 +19,7 @@ func (c *Client) GetTxs(address string, build string) (*Page, error) {
 	return c.getTxs(fmt.Sprintf("%s/transactions?%s",
 		c.BaseURL,
 		url.Values{
-			"address":  {address},
+			"address": {address},
 		}.Encode()), build)
 }
 

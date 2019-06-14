@@ -11,6 +11,7 @@ import (
 	"github.com/trustwallet/blockatlas/platform/binance"
 	"github.com/trustwallet/blockatlas/platform/cosmos"
 	"github.com/trustwallet/blockatlas/platform/ethereum"
+	"github.com/trustwallet/blockatlas/platform/ethereum/blockscout"
 	"github.com/trustwallet/blockatlas/platform/icon"
 	"github.com/trustwallet/blockatlas/platform/iotex"
 	"github.com/trustwallet/blockatlas/platform/nimiq"
@@ -32,7 +33,7 @@ var loaders = map[string]func(gin.IRouter){
 	"stellar":      stellar.MakeSetup(coin.XLM, "stellar"),
 	"kin":          stellar.MakeSetup(coin.KIN, "kin"),
 	"tezos":        tezos.Setup,
-	"ethereum":     ethereum.MakeSetup(coin.ETH, "ethereum"),
+	"ethereum":     blockscout.MakeSetup(coin.ETH, "ethereum"),
 	"classic":      ethereum.MakeSetup(coin.ETC, "classic"),
 	"poa":          ethereum.MakeSetup(coin.POA, "poa"),
 	"callisto":     ethereum.MakeSetup(coin.CLO, "callisto"),
