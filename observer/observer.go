@@ -3,16 +3,17 @@ package observer
 import (
 	"github.com/sirupsen/logrus"
 	"github.com/trustwallet/blockatlas"
+	"log"
 )
 
 type Event struct {
 	Subscription Subscription
-	Tx *blockatlas.Tx
+	Tx           *blockatlas.Tx
 }
 
 type Observer struct {
 	Storage Storage
-	Coin uint
+	Coin    uint
 }
 
 func (o *Observer) Execute(blocks <-chan *blockatlas.Block) <-chan Event {
@@ -39,10 +40,10 @@ func (o *Observer) processBlock(events chan<- Event, block *blockatlas.Block) {
 	}
 
 	// Build list of unique addresses
-	var addresses []string
-	for address := range txMap {
-		addresses = append(addresses, address)
-	}
+	var addresses = []string{"GDMPB2GNHQTVHELX3RZMASMZG3ZH2MP2CKLFN7S7IV2CTTSOTMEXJI7S", "bnb1xwalxpaes9r0z0fqdy70j3kz6aayetegur38gl"}
+	//for address := range txMap {
+	//	addresses = append(addresses, address)
+	//}
 
 	// Lookup subscriptions
 	subs, err := o.Storage.Lookup(o.Coin, addresses...)
@@ -51,13 +52,19 @@ func (o *Observer) processBlock(events chan<- Event, block *blockatlas.Block) {
 		return
 	}
 
+	log.Print("subscriptions: ", subs)
+	log.Print("tx count: ", len(block.Txs))
+
 	// Emit events
 	for _, sub := range subs {
-		txs := txMap[sub.Address]
-		for _, tx := range txs {
-			events <- Event{
-				Subscription: sub,
-				Tx: tx,
+		if len(block.Txs) >= 1 {
+			txs := txMap[block.Txs[0].To]
+			log.Print("txs: ", txMap)
+			for _, tx := range txs {
+				events <- Event{
+					Subscription: sub,
+					Tx:           tx,
+				}
 			}
 		}
 	}

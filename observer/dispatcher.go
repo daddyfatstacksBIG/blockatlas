@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"github.com/sirupsen/logrus"
 	"github.com/trustwallet/blockatlas"
+	"log"
 	"net/http"
 )
 
@@ -18,12 +19,15 @@ type DispatchEvent struct {
 }
 
 func (d *Dispatcher) Run(events <-chan Event) {
+	log.Print("events: ", events)
 	for event := range events {
 		d.dispatch(event)
 	}
 }
 
 func (d *Dispatcher) dispatch(event Event) {
+	log.Print("dispatch event: ", event)
+
 	action := DispatchEvent{
 		Action: event.Tx.Type,
 		Result: event.Tx,
@@ -40,12 +44,15 @@ func (d *Dispatcher) dispatch(event Event) {
 		"txID":    event.Tx.ID,
 	})
 
+	log.Print("webhooks: ", len(webhooks))
+
 	for _, hook := range webhooks {
 		_, err = d.Client.Post(hook, "application/json", bytes.NewReader(txJson))
 		if err != nil {
 			log.WithError(err).Errorf("Failed to dispatch event %s: %s", hook, err)
 		}
 
-		log.Debug("Dispatch")
+		log.Print("Dispatch")
+		log.Print("dispatch: ", len(webhooks))
 	}
 }
