@@ -1,11 +1,11 @@
 pool:
-  vmImage: 'Ubuntu 16.04'
+  vmImage: "Ubuntu 16.04"
 
 variables:
-  GOBIN:  '$(GOPATH)/bin' # Go binaries path
-  GOROOT: '/usr/local/go1.13' # Go installation path
-  GOPATH: '$(system.defaultWorkingDirectory)/gopath' # Go workspace path
-  modulePath: '$(GOPATH)/src/github.com/trustwallet/blockatlas' # Path to the module's code
+  GOBIN: "$(GOPATH)/bin" # Go binaries path
+  GOROOT: "/usr/local/go1.13" # Go installation path
+  GOPATH: "$(system.defaultWorkingDirectory)/gopath" # Go workspace path
+  modulePath: "$(GOPATH)/src/github.com/trustwallet/blockatlas" # Path to the module's code
 
 steps:
   - script: |
@@ -18,7 +18,7 @@ steps:
       echo '##vso[task.prependpath]$(GOBIN)'
       echo '##vso[task.prependpath]$(GOROOT)/bin'
       echo '$(go env)'
-    displayName: 'Set up the Go workspace'
+    displayName: "Set up the Go workspace"
 
   - task: CacheBeta@1
     inputs:
@@ -27,13 +27,13 @@ steps:
         go | "$(Agent.OS)"
         go
       path: $(GOPATH)
-    displayName: 'Cache go packages'
+    displayName: "Cache go packages"
 
   - script: |
       go version
       go get -v -t -d ./...
-    workingDirectory: '$(modulePath)'
-    displayName: 'Get dependencies'
+    workingDirectory: "$(modulePath)"
+    displayName: "Get dependencies"
 
   - script: |
       go get github.com/jstemmer/go-junit-report
@@ -41,17 +41,17 @@ steps:
       go get github.com/AlekSi/gocov-xml
       go get -u gopkg.in/matm/v1/gocov-html
       go get github.com/Pantani/httpexpect
-    workingDirectory: '$(modulePath)'
-    displayName: 'Get test dependencies'
+    workingDirectory: "$(modulePath)"
+    displayName: "Get test dependencies"
 
   - script: go test -v ./...
-    workingDirectory: '$(modulePath)'
-    displayName: 'Run unit tests'
+    workingDirectory: "$(modulePath)"
+    displayName: "Run unit tests"
 
   - script: make integration
-    workingDirectory: '$(modulePath)'
-    displayName: 'Run integration tests'
+    workingDirectory: "$(modulePath)"
+    displayName: "Run integration tests"
 
   - script: go build -v .
-    workingDirectory: '$(modulePath)'
-    displayName: 'Build'
+    workingDirectory: "$(modulePath)"
+    displayName: "Build"

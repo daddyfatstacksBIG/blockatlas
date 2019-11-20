@@ -40,7 +40,7 @@ definitions:
     properties:
       assets:
         items:
-          $ref: '#/definitions/api.Coin'
+          $ref: "#/definitions/api.Coin"
         type: array
       currency:
         type: string
@@ -117,7 +117,7 @@ definitions:
   blockatlas.Delegation:
     properties:
       delegator:
-        $ref: '#/definitions/blockatlas.StakeValidator'
+        $ref: "#/definitions/blockatlas.StakeValidator"
         type: object
       metadata:
         type: object
@@ -133,13 +133,13 @@ definitions:
       balance:
         type: string
       coin:
-        $ref: '#/definitions/coin.ExternalCoin'
+        $ref: "#/definitions/coin.ExternalCoin"
         type: object
       delegations:
-        $ref: '#/definitions/blockatlas.DelegationsPage'
+        $ref: "#/definitions/blockatlas.DelegationsPage"
         type: object
       details:
-        $ref: '#/definitions/blockatlas.StakingDetails'
+        $ref: "#/definitions/blockatlas.StakingDetails"
         type: object
       error:
         type: string
@@ -152,13 +152,13 @@ definitions:
         balance:
           type: string
         coin:
-          $ref: '#/definitions/coin.ExternalCoin'
+          $ref: "#/definitions/coin.ExternalCoin"
           type: object
         delegations:
-          $ref: '#/definitions/blockatlas.DelegationsPage'
+          $ref: "#/definitions/blockatlas.DelegationsPage"
           type: object
         details:
-          $ref: '#/definitions/blockatlas.StakingDetails'
+          $ref: "#/definitions/blockatlas.StakingDetails"
           type: object
         error:
           type: string
@@ -168,7 +168,7 @@ definitions:
     items:
       properties:
         delegator:
-          $ref: '#/definitions/blockatlas.StakeValidator'
+          $ref: "#/definitions/blockatlas.StakeValidator"
           type: object
         metadata:
           type: object
@@ -193,12 +193,12 @@ definitions:
   blockatlas.StakeValidator:
     properties:
       details:
-        $ref: '#/definitions/blockatlas.StakingDetails'
+        $ref: "#/definitions/blockatlas.StakingDetails"
         type: object
       id:
         type: string
       info:
-        $ref: '#/definitions/blockatlas.StakeValidatorInfo'
+        $ref: "#/definitions/blockatlas.StakeValidatorInfo"
         type: object
       status:
         type: boolean
@@ -221,7 +221,7 @@ definitions:
       minimum_amount:
         type: string
       reward:
-        $ref: '#/definitions/blockatlas.StakingReward'
+        $ref: "#/definitions/blockatlas.StakingReward"
         type: object
       type:
         type: string
@@ -242,7 +242,7 @@ definitions:
       last_update:
         type: string
       price:
-        $ref: '#/definitions/blockatlas.TickerPrice'
+        $ref: "#/definitions/blockatlas.TickerPrice"
         type: object
       token_id:
         type: string
@@ -272,7 +272,7 @@ definitions:
         last_update:
           type: string
         price:
-          $ref: '#/definitions/blockatlas.TickerPrice'
+          $ref: "#/definitions/blockatlas.TickerPrice"
           type: object
         token_id:
           type: string
@@ -311,7 +311,7 @@ definitions:
       inputs:
         description: Input addresses
         items:
-          $ref: '#/definitions/blockatlas.TxOutput'
+          $ref: "#/definitions/blockatlas.TxOutput"
         type: array
       memo:
         description: Meta data object
@@ -321,7 +321,7 @@ definitions:
       outputs:
         description: Output addresses
         items:
-          $ref: '#/definitions/blockatlas.TxOutput'
+          $ref: "#/definitions/blockatlas.TxOutput"
         type: array
       sequence:
         description: Transaction nonce or sequence
@@ -375,7 +375,7 @@ definitions:
         inputs:
           description: Input addresses
           items:
-            $ref: '#/definitions/blockatlas.TxOutput'
+            $ref: "#/definitions/blockatlas.TxOutput"
           type: array
         memo:
           description: Meta data object
@@ -385,7 +385,7 @@ definitions:
         outputs:
           description: Output addresses
           items:
-            $ref: '#/definitions/blockatlas.TxOutput'
+            $ref: "#/definitions/blockatlas.TxOutput"
           type: array
         sequence:
           description: Transaction nonce or sequence
@@ -426,488 +426,488 @@ paths:
   /market/v1/ticker:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get the ticker value from an market and coin/token
       operationId: get_ticker
       parameters:
-      - description: coin id
-        in: query
-        name: coin
-        required: true
-        type: integer
-      - description: token id
-        in: query
-        name: token
-        type: string
-      - default: USD
-        description: the currency to show the quote
-        in: query
-        name: currency
-        type: string
+        - description: coin id
+          in: query
+          name: coin
+          required: true
+          type: integer
+        - description: token id
+          in: query
+          name: token
+          type: string
+        - default: USD
+          description: the currency to show the quote
+          in: query
+          name: currency
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.Ticker'
+            $ref: "#/definitions/blockatlas.Ticker"
       summary: Get ticker value for a specific market
       tags:
-      - ticker
+        - ticker
   /market/v1/tickers:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Get the ticker values from many markets and coin/token
       operationId: get_tickers
       parameters:
-      - description: Ticker
-        in: body
-        name: tickers
-        required: true
-        schema:
-          $ref: '#/definitions/api.TickerRequest'
-          type: object
+        - description: Ticker
+          in: body
+          name: tickers
+          required: true
+          schema:
+            $ref: "#/definitions/api.TickerRequest"
+            type: object
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.Tickers'
+            $ref: "#/definitions/blockatlas.Tickers"
       summary: Get ticker values for a specific markets
       tags:
-      - ticker
+        - ticker
   /metrics:
     get:
       description: Get application metrics
       operationId: metrics
       summary: Get Metrics
       tags:
-      - metrics
+        - metrics
   /ns/lookup:
     get:
       description: Lookup ENS/ZNS to find registered addresses
       operationId: lookup
       parameters:
-      - description: string name
-        in: query
-        name: name
-        type: string
-      - description: string coin
-        in: query
-        name: coin
-        type: string
+        - description: string name
+          in: query
+          name: name
+          type: string
+        - description: string coin
+          in: query
+          name: coin
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.Resolved'
+            $ref: "#/definitions/blockatlas.Resolved"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Lookup .eth / .zil addresses
       tags:
-      - ns
+        - ns
   /observer/v1/status:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get coin status
       operationId: coin_status
       parameters:
-      - default: Bearer test
-        description: Bearer authorization header
-        in: header
-        name: Authorization
-        required: true
-        type: string
+        - default: Bearer test
+          description: Bearer authorization header
+          in: header
+          name: Authorization
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.CoinStatus'
+            $ref: "#/definitions/api.CoinStatus"
       summary: Get coin status
       tags:
-      - observer
-      - subscriptions
+        - observer
+        - subscriptions
   /observer/v1/webhook/register:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: Delete a webhook for addresses transactions
       operationId: delete_webhook
       parameters:
-      - description: Accounts subscriptions
-        in: body
-        name: subscriptions
-        required: true
-        schema:
-          $ref: '#/definitions/api.Webhook'
-          type: object
-      - default: Bearer test
-        description: Bearer authorization header
-        in: header
-        name: Authorization
-        required: true
-        type: string
+        - description: Accounts subscriptions
+          in: body
+          name: subscriptions
+          required: true
+          schema:
+            $ref: "#/definitions/api.Webhook"
+            type: object
+        - default: Bearer test
+          description: Bearer authorization header
+          in: header
+          name: Authorization
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ObserverResponse'
+            $ref: "#/definitions/api.ObserverResponse"
       summary: Delete a webhook
       tags:
-      - observer
-      - subscriptions
+        - observer
+        - subscriptions
     post:
       consumes:
-      - application/json
+        - application/json
       description: Create a webhook for addresses transactions
       operationId: create_webhook
       parameters:
-      - description: Accounts subscriptions
-        in: body
-        name: subscriptions
-        required: true
-        schema:
-          $ref: '#/definitions/api.Webhook'
-          type: object
-      - default: Bearer test
-        description: Bearer authorization header
-        in: header
-        name: Authorization
-        required: true
-        type: string
+        - description: Accounts subscriptions
+          in: body
+          name: subscriptions
+          required: true
+          schema:
+            $ref: "#/definitions/api.Webhook"
+            type: object
+        - default: Bearer test
+          description: Bearer authorization header
+          in: header
+          name: Authorization
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ObserverResponse'
+            $ref: "#/definitions/api.ObserverResponse"
       summary: Create a webhook
       tags:
-      - observer
-      - subscriptions
+        - observer
+        - subscriptions
   /v1/{coin}/{address}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get transactions from the address
       operationId: tx_v1
       parameters:
-      - default: tezos
-        description: the coin name
-        in: path
-        name: coin
-        required: true
-        type: string
-      - default: tz1WCd2jm4uSt4vntk4vSuUWoZQGhLcDuR9q
-        description: the query address
-        in: path
-        name: address
-        required: true
-        type: string
+        - default: tezos
+          description: the coin name
+          in: path
+          name: coin
+          required: true
+          type: string
+        - default: tz1WCd2jm4uSt4vntk4vSuUWoZQGhLcDuR9q
+          description: the query address
+          in: path
+          name: address
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Transactions
       tags:
-      - platform
-      - tx
+        - platform
+        - tx
   /v1/{coin}/xpub/{xpub}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get transactions from xpub address
       operationId: xpub
       parameters:
-      - default: bitcoin
-        description: the coin name
-        in: path
-        name: coin
-        required: true
-        type: string
-      - default: zpub6ruK9k6YGm8BRHWvTiQcrEPnFkuRDJhR7mPYzV2LDvjpLa5CuGgrhCYVZjMGcLcFqv9b2WvsFtY2Gb3xq8NVq8qhk9veozrA2W9QaWtihrC
-        description: the xpub address
-        in: path
-        name: xpub
-        required: true
-        type: string
+        - default: bitcoin
+          description: the coin name
+          in: path
+          name: coin
+          required: true
+          type: string
+        - default: zpub6ruK9k6YGm8BRHWvTiQcrEPnFkuRDJhR7mPYzV2LDvjpLa5CuGgrhCYVZjMGcLcFqv9b2WvsFtY2Gb3xq8NVq8qhk9veozrA2W9QaWtihrC
+          description: the xpub address
+          in: path
+          name: xpub
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.TxPage'
+            $ref: "#/definitions/blockatlas.TxPage"
       summary: Get xpub transactions
       tags:
-      - platform
-      - tx
+        - platform
+        - tx
   /v2/{coin}/collections/{address}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get all collections from the address
       operationId: collections
       parameters:
-      - default: ethereum
-        description: the coin name
-        in: path
-        name: coin
-        required: true
-        type: string
-      - default: 0x5574Cd97432cEd0D7Caf58ac3c4fEDB2061C98fB
-        description: the query address
-        in: path
-        name: address
-        required: true
-        type: string
+        - default: ethereum
+          description: the coin name
+          in: path
+          name: coin
+          required: true
+          type: string
+        - default: 0x5574Cd97432cEd0D7Caf58ac3c4fEDB2061C98fB
+          description: the query address
+          in: path
+          name: address
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.CollectionPage'
+            $ref: "#/definitions/blockatlas.CollectionPage"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Collections
       tags:
-      - platform
-      - collection
+        - platform
+        - collection
   /v2/{coin}/collections/{owner}/collection/{collection_id}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get a collection from the address
       operationId: collection
       parameters:
-      - default: ethereum
-        description: the coin name
-        in: path
-        name: coin
-        required: true
-        type: string
-      - default: 0x0875BCab22dE3d02402bc38aEe4104e1239374a7
-        description: the query address
-        in: path
-        name: owner
-        required: true
-        type: string
-      - default: 0x06012c8cf97bead5deae237070f9587f8e7a266d
-        description: the query collection
-        in: path
-        name: collection_id
-        required: true
-        type: string
+        - default: ethereum
+          description: the coin name
+          in: path
+          name: coin
+          required: true
+          type: string
+        - default: 0x0875BCab22dE3d02402bc38aEe4104e1239374a7
+          description: the query address
+          in: path
+          name: owner
+          required: true
+          type: string
+        - default: 0x06012c8cf97bead5deae237070f9587f8e7a266d
+          description: the query collection
+          in: path
+          name: collection_id
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.CollectionPage'
+            $ref: "#/definitions/blockatlas.CollectionPage"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Collection
       tags:
-      - platform
-      - collection
+        - platform
+        - collection
   /v2/{coin}/staking/delegations/{address}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get stake delegations from the address
       operationId: delegations
       parameters:
-      - default: tron
-        description: the coin name
-        in: path
-        name: coin
-        required: true
-        type: string
-      - default: TPJYCz8ppZNyvw7pTwmjajcx4Kk1MmEUhD
-        description: the query address
-        in: path
-        name: address
-        required: true
-        type: string
+        - default: tron
+          description: the coin name
+          in: path
+          name: coin
+          required: true
+          type: string
+        - default: TPJYCz8ppZNyvw7pTwmjajcx4Kk1MmEUhD
+          description: the query address
+          in: path
+          name: address
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.DelegationResponse'
+            $ref: "#/definitions/blockatlas.DelegationResponse"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Stake Delegations
       tags:
-      - platform
-      - staking
+        - platform
+        - staking
   /v2/{coin}/staking/validators:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get validators from the address
       operationId: validators
       parameters:
-      - default: cosmos
-        description: the coin name
-        in: path
-        name: coin
-        required: true
-        type: string
+        - default: cosmos
+          description: the coin name
+          in: path
+          name: coin
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.DocsResponse'
+            $ref: "#/definitions/blockatlas.DocsResponse"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Validators
       tags:
-      - platform
-      - staking
+        - platform
+        - staking
   /v2/{coin}/tokens/{address}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get tokens from the address
       operationId: tokens
       parameters:
-      - default: ethereum
-        description: the coin name
-        in: path
-        name: coin
-        required: true
-        type: string
-      - default: 0x5574Cd97432cEd0D7Caf58ac3c4fEDB2061C98fB
-        description: the query address
-        in: path
-        name: address
-        required: true
-        type: string
+        - default: ethereum
+          description: the coin name
+          in: path
+          name: coin
+          required: true
+          type: string
+        - default: 0x5574Cd97432cEd0D7Caf58ac3c4fEDB2061C98fB
+          description: the query address
+          in: path
+          name: address
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.CollectionPage'
+            $ref: "#/definitions/blockatlas.CollectionPage"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Tokens
       tags:
-      - platform
-      - token
+        - platform
+        - token
   /v2/{coin}/transactions/{address}:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get transactions from the address
       operationId: tx_v2
       parameters:
-      - default: tezos
-        description: the coin name
-        in: path
-        name: coin
-        required: true
-        type: string
-      - default: tz1WCd2jm4uSt4vntk4vSuUWoZQGhLcDuR9q
-        description: the query address
-        in: path
-        name: address
-        required: true
-        type: string
+        - default: tezos
+          description: the coin name
+          in: path
+          name: coin
+          required: true
+          type: string
+        - default: tz1WCd2jm4uSt4vntk4vSuUWoZQGhLcDuR9q
+          description: the query address
+          in: path
+          name: address
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.TxPage'
+            $ref: "#/definitions/blockatlas.TxPage"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Transactions
       tags:
-      - platform
-      - tx
+        - platform
+        - tx
   /v2/collectibles/categories:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Get collection categories
       operationId: collection_categories
       parameters:
-      - default: '{"60": ["0xb3624367b1ab37daef42e1a3a2ced012359659b0"]}'
-        description: Payload
-        in: body
-        name: data
-        required: true
-        schema:
-          type: string
+        - default: '{"60": ["0xb3624367b1ab37daef42e1a3a2ced012359659b0"]}'
+          description: Payload
+          in: body
+          name: data
+          required: true
+          schema:
+            type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.DocsResponse'
+            $ref: "#/definitions/blockatlas.DocsResponse"
       summary: Get list of collections from a specific coin and addresses
       tags:
-      - Collectibles
+        - Collectibles
   /v2/staking/delegations:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Get Stake Delegations for multiple coins
       operationId: batch_delegations
       parameters:
-      - description: Validators addresses and coins
-        in: body
-        name: delegations
-        required: true
-        schema:
-          $ref: '#/definitions/api.AddressesRequest'
-          type: object
+        - description: Validators addresses and coins
+          in: body
+          name: delegations
+          required: true
+          schema:
+            $ref: "#/definitions/api.AddressesRequest"
+            type: object
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.DelegationsBatchPage'
+            $ref: "#/definitions/blockatlas.DelegationsBatchPage"
       summary: Get Multiple Stake Delegations
       tags:
-      - platform
-      - staking
+        - platform
+        - staking
 swagger: "2.0"
