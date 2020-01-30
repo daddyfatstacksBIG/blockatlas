@@ -673,4 +673,3 @@ func Harmony() Coin {
 func Kusama() Coin {
 	return Coins[KSM]
 }
-
