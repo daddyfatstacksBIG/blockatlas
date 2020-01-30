@@ -1,24 +1,24 @@
-version: '3.7'
+version: "3.7"
 services:
   api:
     container_name: api
     build:
       context: .
       args:
-      - SERVICE=api
+        - SERVICE=api
     ports:
-    - 8420:8420
+      - 8420:8420
     links:
-    - redis
+      - redis
 
   observer:
     container_name: observer
     build:
       context: .
       args:
-       - SERVICE=observer
+        - SERVICE=observer
     links:
-    - redis
+      - redis
 
   syncmarkets:
     container_name: syncmarkets
@@ -27,10 +27,10 @@ services:
       args:
         - SERVICE=syncmarkets
     links:
-    - redis
+      - redis
 
   redis:
     container_name: redis
     image: neojt/mredis
     ports:
-    - 6379:6379
+      - 6379:6379

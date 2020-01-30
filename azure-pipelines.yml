@@ -4,7 +4,7 @@ trigger:
       - master
   tags:
     include:
-      - '*'
+      - "*"
 
 pr:
   branches:
@@ -12,14 +12,14 @@ pr:
       - master
 
 pool:
-  vmImage: 'Ubuntu 16.04'
+  vmImage: "Ubuntu 16.04"
 
 variables:
-  GITHUB_TOKEN: '$(git.token)'
-  GOBIN:  '$(GOPATH)/bin' # Go binaries path
-  GOROOT: '/usr/local/go1.13' # Go installation path
-  GOPATH: '$(Build.SourcesDirectory)/gopath' # Go workspace path
-  modulePath: '$(GOPATH)/src/github.com/trustwallet/blockatlas' # Path to the module's code
+  GITHUB_TOKEN: "$(git.token)"
+  GOBIN: "$(GOPATH)/bin" # Go binaries path
+  GOROOT: "/usr/local/go1.13" # Go installation path
+  GOPATH: "$(Build.SourcesDirectory)/gopath" # Go workspace path
+  modulePath: "$(GOPATH)/src/github.com/trustwallet/blockatlas" # Path to the module's code
 
 jobs:
   - job: Pipeline
@@ -34,26 +34,26 @@ jobs:
           echo '##vso[task.prependpath]$(GOBIN)'
           echo '##vso[task.prependpath]$(GOROOT)/bin'
           echo '$(go env)'
-        displayName: 'Set up the Go workspace'
+        displayName: "Set up the Go workspace"
 
       - script: |
           go version
           go get -v -t -d ./...
-        workingDirectory: '$(modulePath)'
-        displayName: 'Get dependencies'
+        workingDirectory: "$(modulePath)"
+        displayName: "Get dependencies"
 
       - script: make govet
-        workingDirectory: '$(modulePath)'
-        displayName: 'Run go vet'
+        workingDirectory: "$(modulePath)"
+        displayName: "Run go vet"
 
       - script: make test
-        workingDirectory: '$(modulePath)'
-        displayName: 'Run unit tests'
+        workingDirectory: "$(modulePath)"
+        displayName: "Run unit tests"
 
       - script: |
           go get github.com/gavv/httpexpect
           make functional
-        workingDirectory: '$(modulePath)'
+        workingDirectory: "$(modulePath)"
         displayName: "Run functional tests for new PR's"
         condition: ne(variables['build.sourceBranch'], 'refs/heads/master')
         continueOnError: true
@@ -61,24 +61,23 @@ jobs:
       - script: |
           go get github.com/gavv/httpexpect
           make functional
-        workingDirectory: '$(modulePath)'
-        displayName: 'Run functional tests for new releases'
+        workingDirectory: "$(modulePath)"
+        displayName: "Run functional tests for new releases"
         condition: eq(variables['build.sourceBranch'], 'refs/heads/master')
         continueOnError: false
 
       - script: make integration
-        workingDirectory: '$(modulePath)'
-        displayName: 'Run integration tests'
+        workingDirectory: "$(modulePath)"
+        displayName: "Run integration tests"
 
       - script: make go-build
-        workingDirectory: '$(modulePath)'
-        displayName: 'Build'
+        workingDirectory: "$(modulePath)"
+        displayName: "Build"
         condition: not(startsWith(variables['build.sourceBranch'], 'refs/tags/'))
 
       - script: |
           curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
           ./bin/goreleaser --rm-dist
-        workingDirectory: '$(modulePath)'
-        displayName: 'Go Releaser'
+        workingDirectory: "$(modulePath)"
+        displayName: "Go Releaser"
         condition: startsWith(variables['build.sourceBranch'], 'refs/tags/')
-
