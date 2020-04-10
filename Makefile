@@ -7,7 +7,7 @@ BUILD := $(shell git rev-parse --short HEAD)
 DATETIME := $(shell date +"%Y.%m.%d-%H:%M:%S")
 PROJECT_NAME := $(shell basename "$(PWD)")
 API_SERVICE := platform_api
-OSERVER_NOTIFIER := observer_notifier
+OBSERVER_NOTIFIER := observer_notifier
 OBSERVER_PARSER := observer_parser
 OBSERVER_SUBSCRIBER := observer_subscriber
 SWAGGER_API := swagger_api
@@ -134,7 +134,7 @@ integration: go-integration
 start-mock-dyson: stop-dyson
 	@echo "  >  Starting Dyson with mocks"
 	@-dyson  mock/ext-api-dyson & echo $$! > $(PID_DYSON)
-	@echo "  >  Dyson started " `cat $(PID_DYSON)`
+	@echo "  >  Dyson started with PID: " `cat $(PID_DYSON)`
 
 ## fmt: Run `go fmt` for all go files.
 fmt: go-fmt
@@ -154,7 +154,7 @@ goreleaser: go-goreleaser
 govet: go-vet
 
 ## golint: Run golint.
-golint: go-lint
+lint: go-lint-install go-lint
 
 ## docs: Generate swagger docs.
 docs: go-gen-docs
@@ -177,14 +177,13 @@ newman-mocked-params: start-platform-api-mock
 ifeq (,$(test))
 	@bash -c "$(MAKE) newman-run test=transaction host=$(host) && \
 	          $(MAKE) newman-run test=domain host=$(host)"
-	#not-mocked-yet: $(MAKE) newman-run test=token host=$(host) && \
-	#not-mocked-yet: $(MAKE) newman-run test=staking host=$(host) && \
-	#not-mocked-yet: $(MAKE) newman-run test=collection host=$(host) &&
+	@bash -c "$(MAKE) stop"
 else
 	@bash -c "$(MAKE) newman-run test=$(test) host=$(host)"
+	@bash -c "$(MAKE) stop"
 endif
 
-## newman: Run Postman Newman test, the host parameter is required, and you can specify the name of the test do you wanna run (transaction, token, staking, collection, domain, healthcheck, observer). e.g $ make newman test=staking host=http//localhost
+## newman: Run Postman Newman test, the host parameter is required, and you can specify the name of the test do you wanna run (transaction, token, staking, collection, domain, healthcheck, observer). e.g $ make newman test=staking host=http://localhost:8420
 newman: install-newman
 ifeq (,$(test))
 	@bash -c "$(MAKE) newman-run test=transaction host=$(host)"
@@ -215,15 +214,25 @@ endif
 
 go-compile: go-get go-build
 
-go-build:
+go-build: go-build-platform-api go-build-observer-notifier go-build-observer-parser go-build-observer-subscriber go-build-swagger-api
+
+go-build-platform-api:
 	@echo "  >  Building platform_api binary..."
 	GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(API_SERVICE)/platform_api ./cmd/$(API_SERVICE)
+
+go-build-observer-notifier:
 	@echo "  >  Building observer_notifier binary..."
-	GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(OSERVER_NOTIFIER)/observer_notifier ./cmd/$(OSERVER_NOTIFIER)
+	GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(OBSERVER_NOTIFIER)/observer_notifier ./cmd/$(OBSERVER_NOTIFIER)
+
+go-build-observer-parser:
 	@echo "  >  Building observer_parser binary..."
 	GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(OBSERVER_PARSER)/observer_parser ./cmd/$(OBSERVER_PARSER)
+
+go-build-observer-subscriber:
 	@echo "  >  Building observer_subscriber binary..."
 	GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(OBSERVER_SUBSCRIBER)/observer_subscriber ./cmd/$(OBSERVER_SUBSCRIBER)
+
+go-build-swagger-api:
 	@echo "  >  Building swagger_api binary..."
 	GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(SWAGGER_API)/swagger_api ./cmd/$(SWAGGER_API)
 
@@ -244,7 +253,7 @@ go-clean:
 
 go-test:
 	@echo "  >  Running unit tests"
-	GOBIN=$(GOBIN) go test -cover -race -v ./...
+	GOBIN=$(GOBIN) go test -cover -race -coverprofile=coverage.txt -covermode=atomic -v ./...
 
 go-integration:
 	@echo "  >  Running integration tests"
@@ -270,9 +279,13 @@ go-vet:
 	@echo "  >  Running go vet"
 	GOBIN=$(GOBIN) go vet ./...
 
+go-lint-install:
+	@echo "  >  Installing golint"
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s
+
 go-lint:
 	@echo "  >  Running golint"
-	GOBIN=$(GOBIN) golint ./...
+	bin/golangci-lint run --timeout=2m
 
 .PHONY: help
 all: help
