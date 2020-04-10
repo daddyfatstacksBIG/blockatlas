@@ -8,7 +8,7 @@ definitions:
     type: object
   api.AddressesRequest:
     items:
-      $ref: '#/definitions/api.AddressBatchRequest'
+      $ref: "#/definitions/api.AddressBatchRequest"
     type: array
   api.Coin:
     properties:
@@ -17,7 +17,7 @@ definitions:
       token_id:
         type: string
       type:
-        $ref: '#/definitions/blockatlas.CoinStatus'
+        $ref: "#/definitions/blockatlas.CoinStatus"
         type: object
     type: object
   api.Ticker:
@@ -31,7 +31,7 @@ definitions:
       last_update:
         type: string
       price:
-        $ref: '#/definitions/api.TickerPrice'
+        $ref: "#/definitions/api.TickerPrice"
         type: object
       token_id:
         type: string
@@ -53,14 +53,14 @@ definitions:
     properties:
       assets:
         items:
-          $ref: '#/definitions/api.Coin'
+          $ref: "#/definitions/api.Coin"
         type: array
       currency:
         type: string
     type: object
   api.Tickers:
     items:
-      $ref: '#/definitions/api.Ticker'
+      $ref: "#/definitions/api.Ticker"
     type: array
   blockatlas.CoinStatus:
     properties:
@@ -101,12 +101,12 @@ definitions:
     type: object
   blockatlas.CollectionPage:
     items:
-      $ref: '#/definitions/blockatlas.Collection'
+      $ref: "#/definitions/blockatlas.Collection"
     type: array
   blockatlas.Delegation:
     properties:
       delegator:
-        $ref: '#/definitions/blockatlas.StakeValidator'
+        $ref: "#/definitions/blockatlas.StakeValidator"
         type: object
       metadata:
         type: object
@@ -122,22 +122,22 @@ definitions:
       balance:
         type: string
       coin:
-        $ref: '#/definitions/coin.ExternalCoin'
+        $ref: "#/definitions/coin.ExternalCoin"
         type: object
       delegations:
-        $ref: '#/definitions/blockatlas.DelegationsPage'
+        $ref: "#/definitions/blockatlas.DelegationsPage"
         type: object
       details:
-        $ref: '#/definitions/blockatlas.StakingDetails'
+        $ref: "#/definitions/blockatlas.StakingDetails"
         type: object
     type: object
   blockatlas.DelegationsBatchPage:
     items:
-      $ref: '#/definitions/blockatlas.DelegationResponse'
+      $ref: "#/definitions/blockatlas.DelegationResponse"
     type: array
   blockatlas.DelegationsPage:
     items:
-      $ref: '#/definitions/blockatlas.Delegation'
+      $ref: "#/definitions/blockatlas.Delegation"
     type: array
   blockatlas.DocsResponse:
     properties:
@@ -154,12 +154,12 @@ definitions:
   blockatlas.StakeValidator:
     properties:
       details:
-        $ref: '#/definitions/blockatlas.StakingDetails'
+        $ref: "#/definitions/blockatlas.StakingDetails"
         type: object
       id:
         type: string
       info:
-        $ref: '#/definitions/blockatlas.StakeValidatorInfo'
+        $ref: "#/definitions/blockatlas.StakeValidatorInfo"
         type: object
       status:
         type: boolean
@@ -182,7 +182,7 @@ definitions:
       minimum_amount:
         type: string
       reward:
-        $ref: '#/definitions/blockatlas.StakingReward'
+        $ref: "#/definitions/blockatlas.StakingReward"
         type: object
       type:
         type: string
@@ -223,7 +223,7 @@ definitions:
       inputs:
         description: Input addresses
         items:
-          $ref: '#/definitions/blockatlas.TxOutput'
+          $ref: "#/definitions/blockatlas.TxOutput"
         type: array
       memo:
         description: Meta data object
@@ -233,7 +233,7 @@ definitions:
       outputs:
         description: Output addresses
         items:
-          $ref: '#/definitions/blockatlas.TxOutput'
+          $ref: "#/definitions/blockatlas.TxOutput"
         type: array
       sequence:
         description: Transaction nonce or sequence
@@ -257,7 +257,7 @@ definitions:
     type: object
   blockatlas.TxPage:
     items:
-      $ref: '#/definitions/blockatlas.Tx'
+      $ref: "#/definitions/blockatlas.Tx"
     type: array
   coin.ExternalCoin:
     properties:
@@ -322,11 +322,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.Resolved'
+            $ref: "#/definitions/blockatlas.Resolved"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Lookup .eth / .zil addresses
       tags:
         - Naming
@@ -355,7 +355,7 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Transactions
       tags:
         - Transactions
@@ -384,7 +384,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.TxPage'
+            $ref: "#/definitions/blockatlas.TxPage"
       summary: Get xpub transactions
       tags:
         - Transactions
@@ -426,7 +426,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/watchmarket.ChartData'
+            $ref: "#/definitions/watchmarket.ChartData"
       summary: Get charts data for a specific coin
       tags:
         - Market
@@ -458,7 +458,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/watchmarket.ChartCoinInfo'
+            $ref: "#/definitions/watchmarket.ChartCoinInfo"
       summary: Get charts coin info data for a specific coin
       tags:
         - Market
@@ -474,14 +474,14 @@ paths:
           name: tickers
           required: true
           schema:
-            $ref: '#/definitions/api.TickerRequest'
+            $ref: "#/definitions/api.TickerRequest"
       produces:
         - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.Tickers'
+            $ref: "#/definitions/api.Tickers"
       summary: Get ticker values for a specific market
       tags:
         - Market
@@ -510,11 +510,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.DelegationResponse'
+            $ref: "#/definitions/blockatlas.DelegationResponse"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Stake Delegations
       tags:
         - Staking
@@ -537,11 +537,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.DocsResponse'
+            $ref: "#/definitions/blockatlas.DocsResponse"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Validators
       tags:
         - Staking
@@ -570,11 +570,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.CollectionPage'
+            $ref: "#/definitions/blockatlas.CollectionPage"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Tokens
       tags:
         - Transactions
@@ -603,11 +603,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.TxPage'
+            $ref: "#/definitions/blockatlas.TxPage"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Transactions
       tags:
         - Transactions
@@ -632,12 +632,12 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/blockatlas.Resolved'
+              $ref: "#/definitions/blockatlas.Resolved"
             type: array
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Lookup .eth / .zil addresses
       tags:
         - Naming
@@ -653,14 +653,14 @@ paths:
           name: delegations
           required: true
           schema:
-            $ref: '#/definitions/api.AddressesRequest'
+            $ref: "#/definitions/api.AddressesRequest"
       produces:
         - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.DelegationsBatchPage'
+            $ref: "#/definitions/blockatlas.DelegationsBatchPage"
       summary: Get Multiple Stake Delegations
       tags:
         - Staking
@@ -676,14 +676,14 @@ paths:
           name: delegations
           required: true
           schema:
-            $ref: '#/definitions/api.AddressesRequest'
+            $ref: "#/definitions/api.AddressesRequest"
       produces:
         - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.DelegationsBatchPage'
+            $ref: "#/definitions/blockatlas.DelegationsBatchPage"
       summary: Get Multiple Stake Delegations
       tags:
         - Staking
@@ -718,11 +718,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.CollectionPage'
+            $ref: "#/definitions/blockatlas.CollectionPage"
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/ginutils.ApiError'
+            $ref: "#/definitions/ginutils.ApiError"
       summary: Get Collection
       tags:
         - Collections
@@ -746,7 +746,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/blockatlas.DocsResponse'
+            $ref: "#/definitions/blockatlas.DocsResponse"
       summary: Get list of collections from a specific coin and addresses
       tags:
         - Collections
